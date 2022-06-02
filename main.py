@@ -17,7 +17,7 @@ import seaborn as sns
 from sklearn.model_selection import train_test_split
 
 ROOT = "/Users/hank/Downloads"
-ROOT = "data"
+# ROOT = "data"
 
 def pre_processing():
     pm_25_df = pd.read_csv(f'{ROOT}/PM2,5.Hourly Aggregate (ตg_mณ) - Unverified@23-20220528121258.csv')
@@ -130,16 +130,24 @@ def pearson_correlation():
 def variance():
     df = pd.read_csv(f"{ROOT}/cleaned_dataset.csv").dropna(axis=0)
     variance_wind_speed = df[["timestamp", "pm_25 - Value (µg/m³)", "wind_speed - Value (m/s)"]]
+    # 2016-12-31 00:00:00
+    variance_wind_speed['timestamp'] = pd.to_datetime(variance_wind_speed['timestamp'], format="%Y-%m-%d %H:%M:%S").astype(int)
     sns.relplot(x="timestamp", y="pm_25 - Value (µg/m³)", hue="wind_speed - Value (m/s)", data=variance_wind_speed)
     variance_wind_direction = df[["timestamp", "pm_25 - Value (µg/m³)", "wind_direction - Value (°)"]]
+    variance_wind_direction['timestamp'] = pd.to_datetime(variance_wind_direction['timestamp'], format="%Y-%m-%d %H:%M:%S").astype(int)
     sns.relplot(x="timestamp", y="pm_25 - Value (µg/m³)", hue="wind_direction - Value (°)", data=variance_wind_direction)
     variance_no2 = df[["timestamp", "pm_25 - Value (µg/m³)", "no2 - Value (µg/m³)"]]
+    variance_no2['timestamp'] = pd.to_datetime(variance_no2['timestamp'],
+                                                          format="%Y-%m-%d %H:%M:%S").astype(int)
     sns.relplot(x="timestamp", y="pm_25 - Value (µg/m³)", hue="no2 - Value (µg/m³)",
                 data=variance_no2)
     variance_no = df[["timestamp", "pm_25 - Value (µg/m³)", "no - Value (µg/m³)"]]
+    variance_no['timestamp'] = pd.to_datetime(variance_no['timestamp'],
+                                               format="%Y-%m-%d %H:%M:%S").astype(int)
     sns.relplot(x="timestamp", y="pm_25 - Value (µg/m³)", hue="no - Value (µg/m³)",
                 data=variance_no)
     variance_air_temp = df[["timestamp", "pm_25 - Value (µg/m³)", "air_temp - Value (°C)"]]
+    variance_air_temp['timestamp'] = pd.to_datetime(variance_air_temp['timestamp'], format="%Y-%m-%d %H:%M:%S").astype(int)
     sns.relplot(x="timestamp", y="pm_25 - Value (µg/m³)", hue="air_temp - Value (°C)",
                 data=variance_air_temp)
     plt.show()
