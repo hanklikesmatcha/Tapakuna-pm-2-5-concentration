@@ -175,6 +175,7 @@ def summary():
     )
     plt.show()
 
+
 def training_for_MLP():
     df = pd.read_csv(f"{ROOT}/cleaned_dataset.csv").dropna(axis=0)[
         [
@@ -589,7 +590,7 @@ def max_iterate_lstm2():
 
     # iterate neurons pseudo-logirithmically from 2 to 60
     # have a total of 30 different batch sizes
-    neurons = [i for i in range(1, 30)]
+    neurons = [i for i in range(1, 60)]
     neurons = [i * 2 for i in neurons]
 
     train_loss = []
@@ -623,32 +624,28 @@ def max_iterate_lstm2():
 
         end = time.time()
         times.append(end - start)
-
     # plot train and test loss at each batch size
-    plt.plot(num_neurons, train_loss, label="train_loss", color="blue", linewidth=2)
-    plt.plot(num_neurons, test_loss, label="test_loss", color="red", linewidth=2)
+    plt.plot(neurons, train_loss, label="train_loss", color="blue", linewidth=2)
+    plt.plot(neurons, test_loss, label="test_loss", color="red", linewidth=2)
     plt.xlabel("Batch Size")
     plt.ylabel("Loss")
     plt.legend()
-    plt.show()
 
     # plot time taken to train each neuron
-    plt.plot(num_neurons, times)
+    plt.plot(neurons, times)
     plt.xlabel("Batch Size")
     plt.ylabel("Time (s)")
     plt.show()
-
 
 if __name__ == "__main__":
     warnings.filterwarnings("ignore")
     # pre_processing()
     # pearson_correlation()
-    variance()
+    # variance()
     # summary()
     # training_for_MLP()
-
     # max_regressor()
     # max_iterate_regressor()
     # max_lstm_model()
     # max_iterate_lstm()
-    # max_iterate_lstm2()
+    max_iterate_lstm2()
